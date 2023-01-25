@@ -1,7 +1,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-xmlns:android="http://schemas.android.com/apk/res/android"
-           id="cordova-plugin-firebase-analytics"
-      version="7.0.5">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-plugin-firebase-analytics"
+    version="7.0.5-NTL1">
 
     <name>FirebaseAnalyticsPlugin</name>
     <description>Cordova plugin for Firebase Analytics</description>
@@ -15,16 +15,22 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     </js-module>
 
     <engines>
-        <engine name="cordova" version=">=10.0.0"/>
-        <engine name="cordova-android" version=">=11.0.0"/>
-        <engine name="cordova-ios" version=">=6.0.0"/>
+        <engine name="cordova" version=">=11.0.0" />
+        <engine name="cordova-android" version=">=11.0.0" />
+        <engine name="cordova-ios" version=">=6.2.0" />
     </engines>
 
     <preference name="ANALYTICS_COLLECTION_ENABLED" default="true" />
     <preference name="AUTOMATIC_SCREEN_REPORTING_ENABLED" default="true" />
+    <preference name="USER_TRACKING_DESCRIPTION_IOS" default="$(PRODUCT_NAME) needs your attention." />
+
+    <dependency id="cordova-outsystems-firebase-core"
+        url="https://github.com/OutSystems/cordova-outsystems-firebase-core.git#1.0.1" />
 
     <platform name="ios">
-        <preference name="IOS_FIREBASE_POD_VERSION" default="9.3.0" />
+        <preference name="IOS_FIREBASE_POD_VERSION" default="~> 10.4.0" />
+
+        <hook type="after_prepare" src="hooks/ios/iOSCopyPreferences.js" />
 
         <config-file target="config.xml" parent="/*">
             <feature name="FirebaseAnalytics">
@@ -35,13 +41,16 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 
         <!--
             use a bit hacky method to set boolean value as a string:
-            https://developer.apple.com/documentation/foundation/nsstring/1409420-boolvalue?preferredLanguage=occ
+        https://developer.apple.com/documentation/foundation/nsstring/1409420-boolvalue?preferredLanguage=occ
         -->
         <config-file target="*-Info.plist" parent="FIREBASE_ANALYTICS_COLLECTION_ENABLED">
             <string>$ANALYTICS_COLLECTION_ENABLED</string>
         </config-file>
         <config-file target="*-Info.plist" parent="FirebaseAutomaticScreenReportingEnabled">
             <string>$AUTOMATIC_SCREEN_REPORTING_ENABLED</string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NSUserTrackingUsageDescription">
+            <string>$USER_TRACKING_DESCRIPTION_IOS</string>
         </config-file>
 
         <header-file src="src/ios/FirebaseAnalyticsPlugin.h" />
@@ -58,7 +67,9 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     </platform>
 
     <platform name="android">
-        <preference name="ANDROID_FIREBASE_BOM_VERSION" default="30.3.1" />
+        <preference name="ANDROID_FIREBASE_BOM_VERSION" default="31.2.0" />
+
+        <hook type="before_plugin_install" src="hooks/android/build_gradle_add_dependency.js" />
 
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="FirebaseAnalytics">
@@ -72,7 +83,6 @@ xmlns:android="http://schemas.android.com/apk/res/android"
             <preference name="GradlePluginGoogleServicesEnabled" value="true" />
             <preference name="GradlePluginGoogleServicesVersion" value="4.3.13" />
         </config-file>
-
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.INTERNET" />
         </config-file>
