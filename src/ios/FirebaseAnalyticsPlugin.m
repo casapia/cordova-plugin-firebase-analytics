@@ -7,11 +7,12 @@
 @implementation FirebaseAnalyticsPlugin
 
 - (void)pluginInitialize {
-    NSLog(@"Starting Firebase Analytics plugin");
+    NSLog(@"Starting NTL Firebase Analytics plugin");
 
     if(![FIRApp defaultApp]) {
         [FIRApp configure];
     }
+    NSLog(@"NTL FirebaseCore version: %@", @FIRFirebaseVersion);
 }
 
 - (void)logEvent:(CDVInvokedUrlCommand *)command {
@@ -80,35 +81,11 @@
 }
 
 - (void)requestTrackingAuthorization:(CDVInvokedUrlCommand *)command {
-    
-    bool showInformation = [[command.arguments objectAtIndex:0] boolValue];
-
-    if(showInformation) {
-        
-        NSString* title = [command.arguments objectAtIndex:1];
-        NSString* message = [command.arguments objectAtIndex:2];
-        NSString* buttonTitle = [command.arguments objectAtIndex:3];
-        
-        [self showPermissionInformationPopup:title :message :buttonTitle :^(UIAlertAction *action ) {
-            [self showTrackingAuthorizationPopup:command];
-        }];
-        
-    }
-    else {
-        [self showTrackingAuthorizationPopup:command];
-    }
-}
-
-- (void)showTrackingAuthorizationPopup:(CDVInvokedUrlCommand *)command {
-    
     if (@available(iOS 14, *)) {
-        
         NSDictionary *dict = NSBundle.mainBundle.infoDictionary;
-        
         if([dict objectForKey:@"NSUserTrackingUsageDescription"]){
             [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
                 BOOL result = status == ATTrackingManagerAuthorizationStatusAuthorized;
-                
                 CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:result];
                 [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
             }];
@@ -119,29 +96,5 @@
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:true];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
-
-typedef void (^showPermissionInformationPopupHandler)(UIAlertAction*);
-- (void)showPermissionInformationPopup:
-(NSString *)title :
-(NSString *)message :
-(NSString *)buttonTitle :
-(showPermissionInformationPopupHandler)confirmationHandler
-{
-    
-    UIAlertController *alert = [UIAlertController
-                                alertControllerWithTitle:title
-                                message:message
-                                preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *okAction = [UIAlertAction
-                               actionWithTitle:buttonTitle
-                               style:UIAlertActionStyleDefault
-                               handler:confirmationHandler];
-    
-    [alert addAction:okAction];
-    [self.viewController presentViewController:alert animated:YES completion:nil];
-}
-
-
 
 @end
