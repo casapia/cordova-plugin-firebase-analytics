@@ -38,7 +38,6 @@
     "postdocs": "perl -i -0pe 's/(<!-- TypedocGenerated -->).*/$1\n\n/gms' README.md && cat ./docs/README.md >> README.md"
   },
   "devDependencies": {
-    "eslint": "^8.33.0",
     "typedoc": "^0.23.24",
     "typedoc-plugin-markdown": "^3.14"
   }
