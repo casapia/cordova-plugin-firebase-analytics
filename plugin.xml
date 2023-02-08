@@ -69,7 +69,7 @@
     <platform name="android">
         <preference name="ANDROID_FIREBASE_BOM_VERSION" default="30.3.1" />
 
-        <!--hook type="before_plugin_install" src="hooks/android/build_gradle_add_dependency.js" /-->
+        <hook type="before_plugin_install" src="hooks/android/build_gradle_add_dependency.js" />
 
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="FirebaseAnalytics">
@@ -81,9 +81,9 @@
         <config-file target="config.xml" parent="/*">
             <preference name="AndroidXEnabled" value="true" />
             <preference name="GradlePluginGoogleServicesEnabled" value="true" />
-            <preference name="GradlePluginGoogleServicesVersion" value="4.3.13" />
+            <preference name="GradlePluginGoogleServicesVersion" value="4.3.14" />
         </config-file>
-        
+
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.INTERNET" />
         </config-file>
@@ -97,6 +97,7 @@
 
         <framework src="platform('com.google.firebase:firebase-bom:$ANDROID_FIREBASE_BOM_VERSION')" />
         <framework src="com.google.firebase:firebase-analytics" />
+        <framework src="build.gradle" custom="true" type="gradleReference" />
 
         <source-file src="src/android/FirebaseAnalyticsPlugin.java"
             target-dir="src/by/chemerisuk/cordova/firebase/" />
