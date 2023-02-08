@@ -12,7 +12,7 @@
     if(![FIRApp defaultApp]) {
         [FIRApp configure];
     }
-    NSLog(@"NTL FirebaseCore version: %@", @FIRFirebaseVersion);
+    NSLog(@"NTL FirebaseCore version: %@", [FirebaseCore FIRFirebaseVersion]);
 }
 
 - (void)logEvent:(CDVInvokedUrlCommand *)command {
