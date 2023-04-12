@@ -1,7 +1,7 @@
 interface CordovaPlugins {
-    firebase: FirebasePlugins;
+  firebase: FirebasePlugins;
 }
 
 interface FirebasePlugins {
-    analytics: typeof import("./FirebaseAnalytics");
+  analytics: typeof import("./FirebaseAnalytics");
 }

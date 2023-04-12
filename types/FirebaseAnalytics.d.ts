@@ -8,7 +8,10 @@
  * @example
  * cordova.plugins.firebase.analytics.logEvent("my_event", {param1: "value1"});
  */
-export function logEvent(name: string, params: Record<string, number | string | Array<object>>): Promise<void>;
+export function logEvent(
+  name: string,
+  params: Record<string, number | string | Array<object>>
+): Promise<void>;
 /**
  * Sets the user ID property. This feature must be used in accordance with Google's Privacy Policy.
  *
@@ -71,4 +74,6 @@ export function setCurrentScreen(screenName: string): Promise<void>;
  * @example
  * cordova.plugins.firebase.analytics.setDefaultEventParameters({foo: "bar"});
  */
-export function setDefaultEventParameters(defaults: Record<string, number | string | Array<object>>): Promise<void>;
+export function setDefaultEventParameters(
+  defaults: Record<string, number | string | Array<object>>
+): Promise<void>;

@@ -82,12 +82,6 @@ public class FirebaseAnalyticsPlugin extends ReflectiveCordovaPlugin {
         callbackContext.success();
     }
 
-    @CordovaMethod
-    private void requestTrackingAuthorization(CordovaArgs params, CallbackContext callbackContext) throws JSONException {
-        //Does nothing. This is an iOS specific method.
-        callbackContext.success();
-    }
-
     private static Bundle parse(JSONObject params) throws JSONException {
         Bundle bundle = new Bundle();
         Iterator<String> it = params.keys();

@@ -117,8 +117,3 @@ exports.setDefaultEventParameters =
             exec(resolve, reject, PLUGIN_NAME, "setDefaultEventParameters", [defaults || {}]);
         });
     };
-
-exports.requestTrackingAuthorization =
-    function (showInformation, title, message, buttonTitle, success, error) {
-        exec(success, error, PLUGIN_NAME, 'requestTrackingAuthorization', [showInformation, title, message, buttonTitle]);
-    };

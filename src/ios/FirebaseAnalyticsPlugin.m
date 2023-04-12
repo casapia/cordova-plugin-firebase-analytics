@@ -2,17 +2,15 @@
 
 @import FirebaseCore;
 @import FirebaseAnalytics;
-@import AppTrackingTransparency;
 
 @implementation FirebaseAnalyticsPlugin
 
 - (void)pluginInitialize {
-    NSLog(@"Starting NTL Firebase Analytics plugin");
+    NSLog(@"Starting Firebase Analytics plugin");
 
     if(![FIRApp defaultApp]) {
         [FIRApp configure];
     }
-    NSLog(@"NTL FirebaseCore version: %@", FIRFirebaseVersion());
 }
 
 - (void)logEvent:(CDVInvokedUrlCommand *)command {
@@ -77,23 +75,6 @@
     [FIRAnalytics setDefaultEventParameters:params];
 
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-}
-
-- (void)requestTrackingAuthorization:(CDVInvokedUrlCommand *)command {
-    if (@available(iOS 14, *)) {
-        NSDictionary *dict = NSBundle.mainBundle.infoDictionary;
-        if([dict objectForKey:@"NSUserTrackingUsageDescription"]){
-            [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
-                BOOL result = status == ATTrackingManagerAuthorizationStatusAuthorized;
-                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:result];
-                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-            }];
-            return;
-        }
-    }
-    
-    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:true];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
