@@ -8,6 +8,10 @@ import by.chemerisuk.cordova.support.CordovaMethod;
 import by.chemerisuk.cordova.support.ReflectiveCordovaPlugin;
 import static by.chemerisuk.cordova.support.ExecutionThread.WORKER;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.apache.cordova.CallbackContext;
@@ -18,6 +22,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Objects;
 
 public class FirebaseAnalyticsPlugin extends ReflectiveCordovaPlugin {
     private static final String TAG = "FirebaseAnalyticsPlugin";
@@ -91,7 +96,7 @@ public class FirebaseAnalyticsPlugin extends ReflectiveCordovaPlugin {
                 if (task.isSuccessful()) {
                     callbackContext.success(task.getResult());
                 } else {
-                    callbackContext.error();
+                    callbackContext.error(Objects.requireNonNull(task.getException()).getMessage());
                 }
             }
         });
