@@ -1,4 +1,5 @@
 #import "FirebaseAnalyticsPlugin.h"
+#import "FIRAnalytics+Consent.h"
 
 @import FirebaseCore;
 @import FirebaseAnalytics;
@@ -76,6 +77,18 @@
 
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)getAppInstanceId:(CDVInvokedUrlCommand *)command {
+    [[FIRAnalytics appInstanceID] completion:^(NSString * _Nullable identifier, NSError * _Nullable error) {
+        CDVPluginResult *pluginResult;
+        if (error) {
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription];
+        } else {
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:identifier];
+        }
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    }];
 }
 
 @end
