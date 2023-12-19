@@ -117,3 +117,17 @@ exports.setDefaultEventParameters =
             exec(resolve, reject, PLUGIN_NAME, "setDefaultEventParameters", [defaults || {}]);
         });
     };
+
+exports.getAppInstanceId =
+    /**
+     * Retrieves the app instance id from the service.
+     * @returns {Promise<string>} Callback when operation is completed
+     *
+     * @example
+     * cordova.plugins.firebase.analytics.getAppInstanceId();
+     */
+    function () {
+        return new Promise(function (resolve, reject) {
+            exec(resolve, reject, PLUGIN_NAME, "getAppInstanceId", []);
+        });
+    };

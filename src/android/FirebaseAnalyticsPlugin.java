@@ -6,6 +6,7 @@ import android.util.Log;
 
 import by.chemerisuk.cordova.support.CordovaMethod;
 import by.chemerisuk.cordova.support.ReflectiveCordovaPlugin;
+import static by.chemerisuk.cordova.support.ExecutionThread.WORKER;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -80,6 +81,20 @@ public class FirebaseAnalyticsPlugin extends ReflectiveCordovaPlugin {
         JSONObject params = args.getJSONObject(0);
         firebaseAnalytics.setDefaultEventParameters(parse(params));
         callbackContext.success();
+    }
+
+    @CordovaMethod(WORKER)
+    private void getAppInstanceId(CordovaArgs args, CallbackContext callbackContext) throws JSONException {
+        firebaseAnalytics.getAppInstanceId().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (task.isSuccessful()) {
+                    callbackContext.success(task.getResult());
+                } else {
+                    callbackContext.error();
+                }
+            }
+        });
     }
 
     private static Bundle parse(JSONObject params) throws JSONException {
