@@ -1,5 +1,4 @@
 #import "FirebaseAnalyticsPlugin.h"
-#import "FIRAnalytics+Consent.h"
 
 @import FirebaseCore;
 @import FirebaseAnalytics;
@@ -80,15 +79,14 @@
 }
 
 - (void)getAppInstanceId:(CDVInvokedUrlCommand *)command {
-    [[FIRAnalytics appInstanceID] completion:^(NSString * _Nullable identifier, NSError * _Nullable error) {
-        CDVPluginResult *pluginResult;
-        if (error) {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription];
-        } else {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:identifier];
-        }
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    }];
+    NSString *appInstanceID = [FIRAnalytics appInstanceID];
+    CDVPluginResult *pluginResult;
+    if (appInstanceID) {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:appInstanceID];
+    } else {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"ConsentStatus.denied or appInstanceID not available"];
+    }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 @end
