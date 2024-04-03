@@ -78,4 +78,15 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+- (void)getAppInstanceId:(CDVInvokedUrlCommand *)command {
+    NSString *appInstanceID = [FIRAnalytics appInstanceID];
+    CDVPluginResult *pluginResult;
+    if (appInstanceID) {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:appInstanceID];
+    } else {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"ConsentStatus.denied or appInstanceID not available"];
+    }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
 @end
