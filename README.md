@@ -1,18 +1,5 @@
 # Cordova plugin for [Firebase Analytics](https://firebase.google.com/docs/analytics/)
 
-[![NPM version][npm-version]][npm-url] [![NPM downloads][npm-downloads]][npm-url] [![NPM total downloads][npm-total-downloads]][npm-url] [![PayPal donate](https://img.shields.io/badge/paypal-donate-ff69b4?logo=paypal)][donate-url] [![Twitter][twitter-follow]][twitter-url]
-
-| [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)][donate-url] | Your help is appreciated. Create a PR, submit a bug or just grab me :beer: |
-|-|-|
-
-[npm-url]: https://www.npmjs.com/package/cordova-plugin-firebase-analytics
-[npm-version]: https://img.shields.io/npm/v/cordova-plugin-firebase-analytics.svg
-[npm-downloads]: https://img.shields.io/npm/dm/cordova-plugin-firebase-analytics.svg
-[npm-total-downloads]: https://img.shields.io/npm/dt/cordova-plugin-firebase-analytics.svg?label=total+downloads
-[twitter-url]: https://twitter.com/chemerisuk
-[twitter-follow]: https://img.shields.io/twitter/follow/chemerisuk.svg?style=social&label=Follow%20me
-[donate-url]: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4SVTMPKTAD9QC&source=url
-
 ## Index
 
 <!-- MarkdownTOC levels="2,3" autolink="true" -->
@@ -70,24 +57,7 @@ In order to [disable automatic collection of screen view events](https://firebas
 
 ### Adding required configuration files
 
-Cordova supports `resource-file` tag for easy copying resources files. Firebase SDK requires `google-services.json` on Android and `GoogleService-Info.plist` on iOS platforms.
-
-1. Put `google-services.json` and/or `GoogleService-Info.plist` into the root directory of your Cordova project
-2. Add new tag for Android platform
-
-```xml
-<platform name="android">
-    ...
-    <resource-file src="google-services.json" target="app/google-services.json" />
-</platform>
-...
-<platform name="ios">
-    ...
-    <resource-file src="GoogleService-Info.plist" />
-</platform>
-```
-
-This way config files will be copied on `cordova prepare` step.
+No required.
 
 <!-- TypedocGenerated -->
 
