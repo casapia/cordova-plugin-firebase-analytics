@@ -7,9 +7,11 @@
 
 - (void)pluginInitialize {
     NSLog(@"Starting Firebase Analytics plugin");
-
-    if(![FIRApp defaultApp]) {
+    @try {
         [FIRApp configure];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"An error occurred while configuring Firebase: %@", exception);
     }
 }
 
